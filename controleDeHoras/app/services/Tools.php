@@ -93,6 +93,24 @@ Class Tools {
 		return $r;			
 	}
 
+	static public function seconds2humanHours($ss) {
+		$s = $ss%60;
+		$m = floor(($ss%3600)/60);
+		$h = floor(($ss%86400)/3600);
+		$d = floor(($ss%2592000)/86400);
+		$M = floor($ss/2592000);
+
+		$h += $d*24;
+		$d = 0;
+
+		$r = ($M ? "$M mes".($M>1?"es":"").", " : "")
+			.($d ? "$d dia".($d>1?"s":"").", " : "")
+			.($h ? $h."h, " : "")
+			.($m ? $m."m" : "");
+
+		return $r;			
+	}
+
 	static public function firstDayOfWeek($wk_num, $yr, $first = 1, $format = 'F d, Y') 
 	{ 
 		$wk_ts  = strtotime('+' . $wk_num . ' weeks', strtotime($yr . '0101')); 

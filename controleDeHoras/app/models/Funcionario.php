@@ -148,6 +148,6 @@ class Funcionario extends BaseModel {
 			$seconds += Tools::diffInSeconds($hora->hora_entrada, $saida);
 		}
 
-		return Tools::seconds2Human($seconds);
+		return Tools::seconds2humanHours($seconds);
 	}
 }
