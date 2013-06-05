@@ -43,6 +43,13 @@ class Funcionario extends BaseModel {
 
 	}
 
+	static public function isAdministrator()
+	{
+		$funcionario = Funcionario::searchByUsername(Auth::user()->username);
+
+		return $funcionario->id == 1 or $funcionario->administrador;
+	}
+
 	static public function getLoggedUserId() {
 
 		$funcionario = Funcionario::searchByUsername(Auth::user()->username);

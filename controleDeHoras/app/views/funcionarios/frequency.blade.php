@@ -47,7 +47,7 @@
 					<td>{{Tools::time($hora->hora_saida)}}</td>
 					<td>{{Tools::diff($hora->hora_entrada,$hora->hora_saida)}}</td>
 					<td>
-						@if(!$hora->hora_saida or Auth::user()->id == 1)
+						@if(!$hora->hora_saida or Funcionario::isAdministrator())
 							<a class="btn btn-danger btn-small" href="{{URL::route('horas.edit', $hora->id)}}">Editar</a>
 						@endif
 					</td>
