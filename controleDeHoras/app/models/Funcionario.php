@@ -157,4 +157,14 @@ class Funcionario extends BaseModel {
 
 		return Tools::seconds2humanHours($seconds);
 	}
+
+	public function getArticleDateAttribute()
+	{
+		return "1";
+	}
+
+	public function getArticleUserAttribute()
+	{
+		return "2";
+	}
 }

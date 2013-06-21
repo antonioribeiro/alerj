@@ -18,6 +18,9 @@ class ReportsController extends BaseController {
 
 		$weeks = [];
 		while($date->weekOfYear >= $firstWeek) {
+			$date->hour = 0;
+			$date->minute = 0;
+			$date->second = 0;
 			$from = $date->toDateTimeString();
 
 			$date->addDays(4);

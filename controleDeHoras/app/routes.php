@@ -12,7 +12,25 @@
 */
 
 Route::get('tests', function() {
-	return View::make('_partials.colorDepht');
+
+	// dd( DB::select(DB::raw('select * from funcionarios')) );
+
+	//return View::make('_partials.colorDepht');
+	//
+	
+	$matches = Funcionario::where('id','>',0);
+	$user_query = "sonic hedgehog";
+
+foreach(explode(' ', $user_query) as $word)
+{
+    $matches = $matches->orWhere('usuario', 'LIKE', $word);
+    $matches = $matches->orWhere('usuario', 'LIKE', $word);
+}
+
+    $matches = $matches->paginate(10);
+
+	var_dump($matches);
+
 });	
 
 Route::group(array('before' => 'auth.basic'), function()
@@ -37,4 +55,20 @@ Route::group(array('before' => 'auth.basic'), function()
 	Route::get('vpn', array('as' => 'vpn', 'uses' => 'HomeController@vpn'));
 
 	Route::get('nojavascript', array('as' => 'nojavascript', 'uses' => 'HomeController@noJavascript'));
+});
+
+
+Route::group(array('prefix' => 'en'), function()
+{
+	Route::get('/', 'PageController@showHomepage');
+
+	Route::group(array('prefix' => 'admin'), function()
+	{
+		Route::get('/', 'AdminPageController@showDashboard');
+	});
+});
+
+Route::group(array('prefix' => 'admin'), function()
+{
+	Route::get('/', 'AdminPageController@showDashboard');
 });
