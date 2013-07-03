@@ -93,7 +93,7 @@ class HorasController extends BaseController {
 			$input['hora_saida'] = null;
 		}
 
-		if (!isset($input['hora_saida']) or (isset($input['hora_saida']) and $input['hora_saida'] != null)) {
+		if ( ! isset($input['hora_saida'])) {
 			$input['hora_saida'] = null;
 		} else {
 			if ($horas and $input['hora_saida'] < $horas->hora_saida)

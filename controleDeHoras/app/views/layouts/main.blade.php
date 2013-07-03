@@ -13,11 +13,11 @@
 	<link href="{{URL::to('/')}}/assets/css/bootstrap.min.css" rel="stylesheet">
 	<link href="{{URL::to('/')}}/assets/css/retriever.css" rel="stylesheet">
 	<style type="text/css">
-      body {
-        padding-top: 60px;
-        padding-bottom: 40px;
-      }
-    </style>
+	  body {
+		padding-top: 60px;
+		padding-bottom: 40px;
+	  }
+	</style>
 
 	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 	<!--[if lt IE 9]>
@@ -37,7 +37,11 @@
 	<div id="page">
 
 		<script type="text/javascript">
-			if (!matchMedia('all and (min-color: 6)').matches) { route = "{{URL::route('rdp')}}"; if(window.location != route) { window.location = route; } }
+			console.log('screen.colorDepth = ' + screen.colorDepth);
+
+			if ( screen.colorDepth < 24 ) {
+				route = "{{URL::route('rdp')}}"; if(window.location != route) { window.location = route; }
+			}
 		</script>
 
 		<div class="navbar navbar-fixed-top">
@@ -114,13 +118,13 @@
 		<!-- /container -->
 
 		<!-- Le javascript
-	    ================================================== -->
+		================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
-	    <script src="http://code.jquery.com/jquery-latest.js"></script>
-	    <script src="{{URL::to('/')}}/assets/js/bootstrap.min.js"></script>
-	    <script src="{{URL::to('/')}}/assets/js/jquery.dataTables.min.js"></script>
-	    <script src="{{URL::to('/')}}/assets/js/jquery.dataTables.bootstrap.js"></script>
-	    <script src="{{URL::to('/')}}/assets/js/matchMedia.js"></script>
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<script src="{{URL::to('/')}}/assets/js/bootstrap.min.js"></script>
+		<script src="{{URL::to('/')}}/assets/js/jquery.dataTables.min.js"></script>
+		<script src="{{URL::to('/')}}/assets/js/jquery.dataTables.bootstrap.js"></script>
+		<script src="{{URL::to('/')}}/assets/js/matchMedia.js"></script>
 
 		<a class="hiddenlink" href="#" accesskey="t"></a>
 		<div style="display: none;" id="hiddenlpsubmitdiv"></div>

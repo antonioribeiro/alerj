@@ -4,5 +4,5 @@
     RewriteBase /
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^(.*)$ /controleDeHoras/index.php?/$1 [L]
+    RewriteRule ^(.*)$ /controleDeHoras.development/index.php?/$1 [L]
 </IfModule>
