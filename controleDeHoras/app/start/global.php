@@ -55,6 +55,17 @@ App::error(function(Exception $exception, $code)
 });
 
 /*
+| Custom Auth
+|
+*/
+
+Auth::extend('custom', function($app) {
+	$provider =  new \ACR\Auth\ACRUserProvider(new Funcionario);
+
+    return new \Illuminate\Auth\Guard($provider, $app['session']);
+});
+
+/*
 |--------------------------------------------------------------------------
 | Require The Filters File
 |--------------------------------------------------------------------------
@@ -67,15 +78,3 @@ App::error(function(Exception $exception, $code)
 
 require __DIR__.'/../filters.php';
 
-/*
-|--------------------------------------------------------------------------
-|
-|
-|
-*/
-
-Auth::extend('custom', function($app) {
-	$provider =  new \Example\Auth\ExampleUserProvider(new Funcionario);
-
-    return new \Illuminate\Auth\Guard($provider, $app['session']);
-});

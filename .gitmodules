@@ -1,0 +1,3 @@
+[submodule "controleDeHoras/app/libraries"]
+	path = controleDeHoras/app/libraries
+	url = https://github.com/antonioribeiro/core-libraries.git

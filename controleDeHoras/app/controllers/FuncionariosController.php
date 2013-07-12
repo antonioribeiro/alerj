@@ -69,7 +69,7 @@ class FuncionariosController extends BaseController {
 
 		$funcionario->update(Input::all());
 
-		Session::flash('message', 'Funcionario gravado');
+		Session::flash('message', 'Funcionário gravado');
 
 		return Redirect::route('funcionarios.frequency',$funcionario->id);
 	}
@@ -87,8 +87,27 @@ class FuncionariosController extends BaseController {
 
 	public function logout() {
 		Auth::logout();
+
 		Session::regenerate();
+
 		return Redirect::to('/');
+	}
+
+	public function loginForm($error = null) {
+		
+		return View::make('funcionarios.login')->with(compact('error'));
+
+	}
+
+	public function login() {
+		
+		if( ! Funcionario::authenticate(Input::get('username'), Input::get('password')) )
+		{
+			return $this->loginForm('Usuário ou senha inválida.');
+		}
+
+		return Redirect::route('home');
+
 	}
 
 	public function frequency($id) {
@@ -103,6 +122,5 @@ class FuncionariosController extends BaseController {
 				->with('funcionario',$funcionario)
 				->with('horas',$horas);
 	}
-
 
 }

@@ -33,7 +33,11 @@ foreach(explode(' ', $user_query) as $word)
 
 });	
 
-Route::group(array('before' => 'auth.basic'), function()
+Route::get('login', array('as' => 'loginForm', 'uses' => 'FuncionariosController@loginForm'));
+
+Route::post('login', array('as' => 'login', 'before' => 'csrf', 'uses' => 'FuncionariosController@login') );
+
+Route::group(array('before' => 'auth'), function()
 {
 	Route::get('/', array('as' => 'home', 'uses' => 'HomeController@index'));
 

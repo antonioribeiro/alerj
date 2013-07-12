@@ -4,6 +4,17 @@ return array(
 
 	/*
 	|--------------------------------------------------------------------------
+	| LDAP 
+	|--------------------------------------------------------------------------
+	*/
+
+	'ldap_tree' 	=> 'OU=SDGI,OU=Departamentos,OU=ALERJ,DC=alerj,DC=gov,DC=br',
+	'ldap_user' 	=> 'uteste',
+	'ldap_password' => 'trocar',
+	'ldap_server'	=> 'alv107.alerj.gov.br',
+
+	/*
+	|--------------------------------------------------------------------------
 	| Application Debug Mode
 	|--------------------------------------------------------------------------
 	|
@@ -147,7 +158,7 @@ return array(
 		'File'            => 'Illuminate\Support\Facades\File',
 		'Form'            => 'Illuminate\Support\Facades\Form',
 		'Hash'            => 'Illuminate\Support\Facades\Hash',
-		'Html'            => 'Illuminate\Support\Facades\Html',
+		'HTML'            => 'Illuminate\Support\Facades\HTML',
 		'Input'           => 'Illuminate\Support\Facades\Input',
 		'Lang'            => 'Illuminate\Support\Facades\Lang',
 		'Log'             => 'Illuminate\Support\Facades\Log',

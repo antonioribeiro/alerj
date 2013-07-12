@@ -96,46 +96,37 @@ class Funcionario extends BaseModel {
 
 	public static function authenticate($username, $password)
 	{
-		if( Funcionario::tryAuthenticate($username, $password) ) return true;
+		if( ! static::tryAuthenticate($username, $password) )
+		{
+			return false;
+		}
 
-		$funcionario = Funcionario::searchByUsername($username);
+		$user = Funcionario::searchByUsername($username);
 
-		if( Funcionario::tryAuthenticate($funcionario->usuario, $password) ) return true;
-		if( Funcionario::tryAuthenticate($funcionario->nome, $password) ) return true;
+		if ( empty($user) )
+		{
+			$user = Funcionario::addLDAPUser($username);
+		}
 
-		return false;
+		Auth::loginUsingId($user->id);
+
+		return true;
 	}
 
 	public static function tryAuthenticate($username, $password)
 	{
+		if( LDAP::authenticate($username, $password) ) return true;
 
-		$ldaprdn = "CN=$username,OU=SDGI,OU=Departamentos,OU=ALERJ,DC=alerj,DC=gov,DC=br";
+		$funcionario = Funcionario::searchByUsername($username);
 
-		Log::error($ldaprdn);
-
-		$ldapconn = ldap_connect("alv107.alerj.gov.br") or die("Could not connect to LDAP server.");
-		$result = false;
-
-		if ($ldapconn) 
+		if( ! empty($funcionario))
 		{
+			if( LDAP::authenticate($funcionario->usuario, $password) ) return true;
 
-			$ldapbind = @ldap_bind($ldapconn, $ldaprdn, $password);
-
-			if ($ldapbind) 
-			{
-				$result = true;
-			} else {
-				Log::error('Error binding to LDAP.');
-			}
-
-			ldap_unbind($ldapconn);
-
-		} else {
-			Log::error('Error connecting to LDAP.');
+			if( LDAP::authenticate($funcionario->nome, $password) ) return true;
 		}
 
-		return $result;
-
+		return false;
 	}
 
 	public static function workHours($funcionario, $dateStart, $dateEnd) 
@@ -166,5 +157,24 @@ class Funcionario extends BaseModel {
 	public function getArticleUserAttribute()
 	{
 		return "2";
+	}
+
+	public static function addLDAPUser($username)
+	{
+		$user = LDAP::searchUser($username);
+		///$user = LDAP::searchUser('mcmachado');
+
+		$input = 	[
+						'matricula' => $user[0]['description'][0],
+						'nome' => $user[0]['displayname'][0],
+						'divisao' => 'SDGI',
+						'email' => $user[0]['cn'][0].'@alerj.rj.gov.br',
+						'usuario' => $user[0]['cn'][0],
+						'horario_limite' => '19:00:00',
+					];
+
+		Tools::utf8EncodeArray($input);
+
+		return Funcionario::create($input);
 	}
 }

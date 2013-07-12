@@ -5,6 +5,11 @@ Breadcrumbs::register('home', function($breadcrumbs) {
     $breadcrumbs->push('Funcionários', route('home'));
 });
 
+Breadcrumbs::register('funcionario.login', function($breadcrumbs) {
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('Login');
+});
+
 Breadcrumbs::register('funcionario.edit', function($breadcrumbs, $funcionario) {
     $breadcrumbs->parent('home');
     $breadcrumbs->push($funcionario->nome, route('funcionarios.frequency', $funcionario->id));

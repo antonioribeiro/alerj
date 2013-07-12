@@ -61,6 +61,9 @@
 								</a>
 								<ul class="dropdown-menu">
 									<li>
+										<a href="{{URL::route('logout')}}">Logout</a>
+									</li>
+									<li>
 										<a href="{{URL::route('home')}}">Funcionários</a>
 									</li>
 									<li>
@@ -70,13 +73,15 @@
 							</li>
 						</ul>
 
-						<ul class="nav">
-							<li class="dropdown">
-								<a href="{{URL::route('funcionarios.frequency',Auth::user()->id)}}">
-									{{Funcionario::getLoggedUserFullName()}}
-								</a>
-							</li>
-						</ul>
+						@if( ! Auth::guest() )
+							<ul class="nav">
+								<li class="dropdown">
+									<a href="{{URL::route('funcionarios.frequency',Auth::user()->id)}}">
+										{{Funcionario::getLoggedUserFullName()}}
+									</a>
+								</li>
+							</ul>
+						@endif
 						
 					</div>
 					<!--/.nav-collapse -->

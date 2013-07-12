@@ -19,7 +19,7 @@
 			@foreach(Funcionario::all() as $funcionario)
 				<tr>
 					<td>{{$funcionario->id}}</td>
-					<td>{{Html::link(URL::route('funcionarios.frequency',$funcionario->id), $funcionario->nome) . ($funcionario->administrador ? '<br>administrador' : '') }}</td>
+					<td>{{HTML::link(URL::route('funcionarios.frequency',$funcionario->id), $funcionario->nome) . ($funcionario->administrador ? '<br>administrador' : '') }}</td>
 					<td>{{$funcionario->ramais()}}</td>
 					<td>{{$funcionario->matricula}}</td>
 					<td>{{$funcionario->divisao}}</td>

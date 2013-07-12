@@ -1,11 +1,9 @@
-<?php namespace Example\Auth;
+<?php namespace ACR\Auth;
 
 use Illuminate\Auth\UserProviderInterface,
-    Illuminate\Auth\GenericUser,
-    Example\Domain\User\Service\UserService,
-    Example\Domain\User\Entity\User;
+    Illuminate\Auth\GenericUser;
 
-class ExampleUserProvider implements UserProviderInterface
+class ACRUserProvider implements UserProviderInterface
 {
     /**
     * @var UserService
@@ -70,10 +68,10 @@ class ExampleUserProvider implements UserProviderInterface
      */
      public function validateCredentials(\Illuminate\Auth\UserInterface $user, array $credentials)
      {
-         $validated = \Funcionario::authenticate($credentials['email'], $credentials['password']);
+        $validated = \Funcionario::authenticate($credentials['email'], $credentials['password']);
 
-         $validated = $validated && $user->userName = $credentials['email'];
+        $validated = $validated && $user->userName = $credentials['email'];
 
-         return $validated;
+        return $validated;
      }
 }
