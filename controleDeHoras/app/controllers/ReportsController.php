@@ -81,7 +81,7 @@ class ReportsController extends BaseController {
 
 			foreach($horas->orderBy('id')->get() as $hora) {
 				$t = (new Carbon( $hora->hora_entrada ))->diff((new Carbon( $hora->hora_saida )));
-				$t = Carbon::create($t->y,$t->m,$t->d,$t->h,$t->i,$t->s);
+				$t = $t->h+($t->i/60); // Carbon::create($t->y,$t->m,$t->d,$t->h,$t->i,$t->s);
 
 				if($first or $date !== (new Carbon( $hora->hora_entrada ))->format('d/m/Y')) {
 					$date = (new Carbon( $hora->hora_entrada ))->format('d/m/Y');
@@ -96,9 +96,17 @@ class ReportsController extends BaseController {
 					$cols = 0;
 				}
 
+				$modification = '';
+				if(!empty($hora->alterado_em))
+				{
+					$modification = Funcionario::find($hora->alterado_por)->nome.' - '.$hora->descricao;
+				}
+
 				$r .= ';"'.(new Carbon( $hora->hora_entrada ))->format('H:i').'"'
 					  .';"'.(new Carbon( $hora->hora_saida ))->format('H:i').'"'
- 					  .';"'.$t->format('H:i').'"'
+ 					  .';'.str_replace('.', ',', $t).''
+ 					  .';"'.($hora->saida_automatica ? 'Sim' : '').'"'
+ 					  .';"'.$modification.'"'
 					  .';'.'""'
 					  ;
 				$cols++;
@@ -117,7 +125,10 @@ class ReportsController extends BaseController {
 			$h .= ';'.'""'
 				 .';'.'"Entrada"'
 				 .';'.'"Saida"'
-				 .';'.'"Tempo"';
+				 .';'.'"Tempo"'
+				 .';'.'"Saída Automatica"'
+				 .';'.'"Modificado"'
+				 ;
 
 		}
 

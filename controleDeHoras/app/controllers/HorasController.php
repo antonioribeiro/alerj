@@ -109,7 +109,14 @@ class HorasController extends BaseController {
 			return $this->edit($id);
 		}
 
+		$time = new ExpressiveDate;
+		$time->setDefaultDateFormat('Y.m.d H:i');
+		$input['alterado_em'] = "$time";
+		$input['alterado_por'] = Auth::user()->id;
+
 		$model->update($input);
+
+		$model->alterado_em = 
 
 		Session::flash('message', 'Frequencia alterada');
 

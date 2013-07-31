@@ -73,6 +73,7 @@ class Funcionario extends BaseModel {
 			if ($horaEntrada < $today) {
 				$h = explode(':', $this->horario_limite);
 				$hora->hora_saida = $horaEntrada->setTime($h[0],$h[1],0);
+				$hora->saida_automatica = true;
 				$hora->save();
 			} else {
 				return true;
