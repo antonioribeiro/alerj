@@ -109,6 +109,12 @@ class HorasController extends BaseController {
 			return $this->edit($id);
 		}
 
+		if ( ! isset($input['descricao']) or empty($input['descricao']) )
+		{
+			Session::flash('error', 'A descrição precisa ser preenchida.');
+			return $this->edit($id);
+		}
+
 		$time = new ExpressiveDate;
 		$time->setDefaultDateFormat('Y.m.d H:i');
 		$input['alterado_em'] = "$time";
