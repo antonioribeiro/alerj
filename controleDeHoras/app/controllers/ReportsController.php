@@ -80,7 +80,11 @@ class ReportsController extends BaseController {
 			}
 
 			foreach($horas->orderBy('id')->get() as $hora) {
-				$t = (new Carbon( $hora->hora_entrada ))->diff((new Carbon( $hora->hora_saida )));
+				$e = new Carbon( $hora->hora_entrada );
+				$e->second = 0;
+				$s = new Carbon( $hora->hora_saida );
+				$s->second = 0;
+				$t = $e->diff($s);
 				$t = $t->h+($t->i/60); // Carbon::create($t->y,$t->m,$t->d,$t->h,$t->i,$t->s);
 
 				if($first or $date !== (new Carbon( $hora->hora_entrada ))->format('d/m/Y')) {
