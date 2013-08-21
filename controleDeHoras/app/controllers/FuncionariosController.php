@@ -113,6 +113,7 @@ class FuncionariosController extends BaseController {
 	public function frequency($id) {
 		$funcionario = 	Funcionario::find($id);
 		$funcionario->isLoggedIn(); /// just check to log user off
+		$isCurrentUser = $funcionario->isCurrentUser(); /// just check to log user off
 		
 		$horas = Hora::where('funcionario_id', $id)
 					->orderBy('id', 'desc')
@@ -120,7 +121,8 @@ class FuncionariosController extends BaseController {
 
 		return View::make('funcionarios.frequency')
 				->with('funcionario',$funcionario)
-				->with('horas',$horas);
+				->with('horas',$horas)
+				->with('isCurrentUser', $isCurrentUser);
 	}
 
 }

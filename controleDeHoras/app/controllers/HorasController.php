@@ -84,7 +84,7 @@ class HorasController extends BaseController {
 		}
 
 		if(isset($input['h_saida']) and $input['h_saida']) {
-			$time = new ExpressiveDate($horas->hora_entrada);
+			$time = new ExpressiveDate($model->hora_entrada);
 			$t = explode(':',$input['h_saida']);
 			$time->setTime($t[0],$t[1],0);
 			$time->setDefaultDateFormat('Y.m.d H:i');
@@ -96,14 +96,14 @@ class HorasController extends BaseController {
 		if ( ! isset($input['hora_saida'])) {
 			$input['hora_saida'] = null;
 		} else {
-			if ($horas and $input['hora_saida'] < $horas->hora_saida)
+			if ($horas and ($input['hora_saida'] < $model->hora_saida))
 			{
-				Session::flash('error', 'Horario de saída digitado não pode ser anterior a '.Tools::time($horas->hora_saida));
+				Session::flash('error', 'Horario de saída digitado não pode ser anterior a '.Tools::time($model->hora_saida));
 				return $this->edit($id);
 			}
 		}
 
-		if ($input['hora_saida'] and $input['hora_saida'] < $model->hora_entrada)
+		if ($input['hora_saida'] and ($input['hora_saida'] < $model->hora_entrada))
 		{
 			Session::flash('error', 'Horario de saída digitado não pode ser anterior ao horário de entrada ('.Tools::time($model->hora_entrada).').');
 			return $this->edit($id);
@@ -111,7 +111,7 @@ class HorasController extends BaseController {
 
 		if ( ! isset($input['descricao']) or empty($input['descricao']) )
 		{
-			Session::flash('error', 'A descrição precisa ser preenchida.');
+			Session::flash('error', 'O motivo/descrição precisa ser preenchido.');
 			return $this->edit($id);
 		}
 
@@ -121,8 +121,6 @@ class HorasController extends BaseController {
 		$input['alterado_por'] = Auth::user()->id;
 
 		$model->update($input);
-
-		$model->alterado_em = 
 
 		Session::flash('message', 'Frequencia alterada');
 

@@ -15,6 +15,12 @@ class Funcionario extends BaseModel {
 
 	public $rules = [];
 
+	public function horasTem($userName) {
+
+		return $this->hasMany('Hora');
+		
+	}
+
 	static public function searchByUsername($userName) {
 		
 		if (substr($userName, 0, 1) == 'u' and is_numeric(substr($userName, 1))) {
@@ -82,6 +88,11 @@ class Funcionario extends BaseModel {
 
 		return false;
 
+	}
+
+	public function isCurrentUser() 
+	{
+		return $this->id === $this->getLoggedUserId();
 	}
 
 	public function ramais() {

@@ -30,7 +30,7 @@
                     
                     <div class="input-append">
                         {{ Form::text('descricao', null, ['class' => 'span4']) }}
-                        <span class="add-on">Motivo ou descrição do evento</span>
+                        <span class="add-on">Motivo da modificação ou descrição do evento</span>
                     </div>
 
                     <br><br>

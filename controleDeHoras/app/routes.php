@@ -13,23 +13,29 @@
 
 Route::get('tests', function() {
 
+	$f = Funcionario::find(2);
+
+	dd($f);
+
+	// return Form::open(['url' => 'abcd']);
+	
 	// dd( DB::select(DB::raw('select * from funcionarios')) );
 
 	//return View::make('_partials.colorDepht');
 	//
 	
-	$matches = Funcionario::where('id','>',0);
-	$user_query = "sonic hedgehog";
+// 	$matches = Funcionario::where('id','>',0);
+// 	$user_query = "sonic hedgehog";
 
-foreach(explode(' ', $user_query) as $word)
-{
-    $matches = $matches->orWhere('usuario', 'LIKE', $word);
-    $matches = $matches->orWhere('usuario', 'LIKE', $word);
-}
+// foreach(explode(' ', $user_query) as $word)
+// {
+//     $matches = $matches->orWhere('usuario', 'LIKE', $word);
+//     $matches = $matches->orWhere('usuario', 'LIKE', $word);
+// }
 
-    $matches = $matches->paginate(10);
+//     $matches = $matches->paginate(10);
 
-	var_dump($matches);
+// 	var_dump($matches);
 
 });	
 
