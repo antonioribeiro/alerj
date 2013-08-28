@@ -23,14 +23,26 @@ class Funcionario extends BaseModel {
 
 	static public function searchByUsername($userName) {
 		
+		$ret = false;
+
 		if (substr($userName, 0, 1) == 'u' and is_numeric(substr($userName, 1))) {
 			$ret = Funcionario::where('matricula', substr($userName, 1, 6).'-'.substr($userName, 7, 1))->first();
-		} else {
+		}
+
+		if(!$ret) {
 			$ret = Funcionario::where('usuario',$userName)->first();
 		}
 
 		if(!$ret) {
+			$ret = Funcionario::where('usuario',strtolower($userName))->first();
+		}
+
+		if(!$ret) {
 			$ret = Funcionario::where('nome',$userName)->first();
+		}
+
+		if(!$ret) {
+			Log::error("username <$userName> not found");
 		}
 
 		return $ret;
@@ -78,7 +90,9 @@ class Funcionario extends BaseModel {
 			$horaEntrada = (new DateTime($hora->hora_entrada))->setTime(0,0,0);
 			if ($horaEntrada < $today) {
 				$h = explode(':', $this->horario_limite);
-				$hora->hora_saida = $horaEntrada->setTime($h[0],$h[1],0);
+				// $hora->hora_saida = $horaEntrada->setTime($h[0],$h[1],0);
+				// Schneider mandou colocar a hora de saída igual à hora de entrada se o usuário esquecer de sair
+				$hora->hora_saida = $hora->hora_entrada;
 				$hora->saida_automatica = true;
 				$hora->save();
 			} else {

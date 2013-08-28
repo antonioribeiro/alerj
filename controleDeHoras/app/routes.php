@@ -39,6 +39,9 @@ Route::get('tests', function() {
 
 });	
 
+// Route::controller('tests', 'TestController');
+Route::resource('tests', 'TestController');
+
 Route::get('login', array('as' => 'loginForm', 'uses' => 'FuncionariosController@loginForm'));
 
 Route::post('login', array('as' => 'login', 'before' => 'csrf', 'uses' => 'FuncionariosController@login') );
