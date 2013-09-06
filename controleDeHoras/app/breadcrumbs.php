@@ -21,6 +21,11 @@ Breadcrumbs::register('funcionario.frequency', function($breadcrumbs, $funcionar
     $breadcrumbs->push($funcionario->nome, route('funcionarios.frequency', $funcionario->id));
 });
 
+Breadcrumbs::register('funcionario.expired', function($breadcrumbs) {
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('Sessão expirada');
+});
+
 Breadcrumbs::register('horas.edit', function($breadcrumbs, $funcionario) {
     $breadcrumbs->parent('home');
     $breadcrumbs->push($funcionario->nome, route('funcionarios.frequency', $funcionario->id));

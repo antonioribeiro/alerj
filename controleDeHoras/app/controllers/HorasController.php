@@ -73,7 +73,7 @@ class HorasController extends BaseController {
 
 		$input = Input::all();
 
-		if(isset($input['h_entrada']) and $input['h_entrada']) {
+		if (isset($input['h_entrada']) and $input['h_entrada']) {
 			$time = new ExpressiveDate($model->hora_entrada);
 			$t = explode(':',$input['h_entrada']);
 			$time->setTime($t[0],$t[1],0);
@@ -83,7 +83,7 @@ class HorasController extends BaseController {
 			Abort::error(404);
 		}
 
-		if(isset($input['h_saida']) and $input['h_saida']) {
+		if (isset($input['h_saida']) and $input['h_saida']) {
 			$time = new ExpressiveDate($model->hora_entrada);
 			$t = explode(':',$input['h_saida']);
 			$time->setTime($t[0],$t[1],0);
@@ -140,36 +140,9 @@ class HorasController extends BaseController {
 
 	public function toggle($id)
 	{
-		$horas = Hora::where('funcionario_id',$id)->whereNull('hora_saida')->get();
-
-		if($horas->count() == 0)
-		{
-			$this->userJustArrived($id);
-		} else {
-			$today = (new DateTime)->setTime(0,0,0);
-
-			foreach($horas as $hora) {
-				$horaEntrada = (new DateTime($hora->hora_entrada))->setTime(0,0,0);
-				if ($horaEntrada == $today) {
-					$hora->hora_saida = new DateTime;
-					$hora->save();
-					return Redirect::to('/');
-				}
-			}
-
-			$this->userJustArrived($id);
-		}
+		Hora::toggle($id);
 
 		return Redirect::to('/');
-	}
-
-	public function userJustArrived($id)
-	{
-		$hora = new Hora;
-		$hora->funcionario_id = $id;
-		$hora->hora_entrada = new DateTime;
-		$hora->funcionario_informou_id = Funcionario::getLoggedUserId();
-		$hora->save();
 	}
 
 }

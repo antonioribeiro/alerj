@@ -93,6 +93,12 @@ class FuncionariosController extends BaseController {
 		return Redirect::to('/');
 	}
 
+	public function expired() {
+		Auth::logout();
+
+		return View::make('funcionarios.expired');
+	}
+	
 	public function loginForm($error = null) {
 		
 		return View::make('funcionarios.login')->with(compact('error'));
@@ -101,7 +107,7 @@ class FuncionariosController extends BaseController {
 
 	public function login() {
 		
-		if( ! Funcionario::authenticate(Input::get('username'), Input::get('password')) )
+		if ( ! Funcionario::authenticate(Input::get('username'), Input::get('password')) )
 		{
 			return $this->loginForm('Usuário ou senha inválida.');
 		}

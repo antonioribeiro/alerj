@@ -4,7 +4,7 @@
 
 @section('content')
 
-	@if($funcionario->isLoggedIn())
+	@if ($funcionario->isLoggedIn())
 		<span class="badge badge-success">Está na ALERJ</span>
 		<?php $loggedIn = true; ?>
 	@else 
@@ -33,7 +33,7 @@
 		</thead>
 		<tbody>
 			@foreach($horas as $hora)
-				@if(isset($lastHora) and Tools::getDay($hora->hora_saida) == Tools::getDay($lastHora->hora_entrada))
+				@if (isset($lastHora) and Tools::getDay($hora->hora_saida) == Tools::getDay($lastHora->hora_entrada))
 					<tr class="info">
 						<td colspan="3">Intervalo</td>
 						<td>{{Tools::diff($hora->hora_saida,$lastHora->hora_entrada)}}</td>
@@ -47,7 +47,7 @@
 					<td>{{Tools::time($hora->hora_saida)}}</td>
 					<td>{{Tools::diff($hora->hora_entrada,$hora->hora_saida)}}</td>
 					<td>
-						@if((!$hora->hora_saida and $isCurrentUser) or Funcionario::isAdministrator())
+						@if ((!$hora->hora_saida and $isCurrentUser) or Funcionario::isAdministrator())
 							<a class="btn btn-danger btn-small" href="{{URL::route('horas.edit', $hora->id)}}">Editar</a>
 						@endif
 					</td>

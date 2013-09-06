@@ -11,9 +11,18 @@
 |
 */
 
-Route::get('tests', function() {
+Route::get('test', function() {
 
-	$f = Funcionario::find(2);
+	$funcionario = Funcionario::find(2);
+
+	$time = $funcionario->getCurrentLoginTime();
+
+	dd( App\Models\Event::getLastEventTime($funcionario->id, $time->hora_entrada) );
+
+	$f = DB::table('funcionarios')
+                     ->select(DB::raw('count(*) as total, nome'))
+                     ->groupBy('nome')
+                     ->get();
 
 	dd($f);
 
@@ -39,12 +48,13 @@ Route::get('tests', function() {
 
 });	
 
-// Route::controller('tests', 'TestController');
-Route::resource('tests', 'TestController');
-
 Route::get('login', array('as' => 'loginForm', 'uses' => 'FuncionariosController@loginForm'));
 
 Route::post('login', array('as' => 'login', 'before' => 'csrf', 'uses' => 'FuncionariosController@login') );
+
+Route::get('event/{token}/{user}/{console}/{event}', array('as' => 'event', 'uses' => 'EventsController@fire'));
+
+Route::get('expired', array('as' => 'expired', 'uses' => 'FuncionariosController@expired'));
 
 Route::group(array('before' => 'auth'), function()
 {
@@ -69,7 +79,6 @@ Route::group(array('before' => 'auth'), function()
 
 	Route::get('nojavascript', array('as' => 'nojavascript', 'uses' => 'HomeController@noJavascript'));
 });
-
 
 Route::group(array('prefix' => 'en'), function()
 {

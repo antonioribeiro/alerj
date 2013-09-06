@@ -75,7 +75,7 @@ class ReportsController extends BaseController {
 			$date = "";
 			$r = "";
 			
-			if($horas->count() == 0) {
+			if ($horas->count() == 0) {
 				$r = '"'.$funcionario->nome.'";'.'"nenhum lançamento encontrado"';
 			}
 
@@ -87,7 +87,7 @@ class ReportsController extends BaseController {
 				$t = $e->diff($s);
 				$t = $t->h+($t->i/60); // Carbon::create($t->y,$t->m,$t->d,$t->h,$t->i,$t->s);
 
-				if($first or $date !== (new Carbon( $hora->hora_entrada ))->format('d/m/Y')) {
+				if ($first or $date !== (new Carbon( $hora->hora_entrada ))->format('d/m/Y')) {
 					$date = (new Carbon( $hora->hora_entrada ))->format('d/m/Y');
 
 					$r .= ($r ? "\n" : "")
@@ -101,7 +101,7 @@ class ReportsController extends BaseController {
 				}
 
 				$modification = '';
-				if(!empty($hora->alterado_em))
+				if ( !empty($hora->alterado_em))
 				{
 					$modification = Funcionario::find($hora->alterado_por)->nome.' - '.$hora->descricao;
 				}

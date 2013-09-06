@@ -8,4 +8,18 @@ class Hora extends BaseModel {
 
 	public $rules = [];
 
+	public static function toggle($id)
+	{
+		$funcionario = Funcionario::find($id);
+
+		if ( ! $funcionario->isLoggedIn() )
+		{
+			$funcionario->logIn();
+		}
+		else
+		{
+			$funcionario->logOut();
+		}
+	}
+
 }

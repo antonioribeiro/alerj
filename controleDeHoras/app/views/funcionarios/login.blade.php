@@ -11,7 +11,7 @@
 		      <div class="well">
 		        <legend>Login</legend>
 		        <form method="POST" action="" accept-charset="UTF-8">
-		        	@if(isset($error))
+		        	@if (isset($error))
 			            <div class="alert alert-error">
 			                <a class="close" data-dismiss="alert" href="#">x</a>Usuário ou senha inválida!
 			            </div>

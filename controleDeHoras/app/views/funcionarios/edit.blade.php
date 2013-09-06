@@ -82,7 +82,7 @@
 
 					<br>
 
-					@if(Funcionario::isAdministrator())
+					@if (Funcionario::isAdministrator())
 						<div class="input-append">
 							{{ Form::select('administrador', array(0 => 'Não', 1 => 'Sim'), null, ['class' => 'span4']) }}
 							<span class="add-on">Administrador</span>

@@ -23,7 +23,7 @@ class BaseModel extends Eloquent {
 			// 
 
 			foreach($data->attributes as $key => $value) {
-				if(!in_array($key, $data->getColumns())) {
+				if ( !in_array($key, $data->getColumns())) {
 					unset($data->attributes[$key]);
 				}
 			}
@@ -36,7 +36,7 @@ class BaseModel extends Eloquent {
 
 		$validation = Validator::make($this->attributes, $this->rules);
 
-		if($validation->passes()) return true;
+		if ($validation->passes()) return true;
 
 		$this->errors = $validation->messages();
 
@@ -46,7 +46,7 @@ class BaseModel extends Eloquent {
 
 	public function getColumns($tableName = null) 
 	{
-		if(!isset($this->columns)) {
+		if ( !isset($this->columns)) {
 			$this->columns = DB::table('information_schema.columns')
 								->select('column_name')
 								->where('table_name', $tableName ?: $this->getTable())

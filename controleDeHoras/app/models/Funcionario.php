@@ -29,19 +29,19 @@ class Funcionario extends BaseModel {
 			$ret = Funcionario::where('matricula', substr($userName, 1, 6).'-'.substr($userName, 7, 1))->first();
 		}
 
-		if(!$ret) {
+		if ( !$ret) {
 			$ret = Funcionario::where('usuario',$userName)->first();
 		}
 
-		if(!$ret) {
+		if ( !$ret) {
 			$ret = Funcionario::where('usuario',strtolower($userName))->first();
 		}
 
-		if(!$ret) {
+		if ( !$ret) {
 			$ret = Funcionario::where('nome',$userName)->first();
 		}
 
-		if(!$ret) {
+		if ( !$ret) {
 			Log::error("username <$userName> not found");
 		}
 
@@ -53,7 +53,7 @@ class Funcionario extends BaseModel {
 
 		$funcionario = Funcionario::searchByUsername(Auth::user()->username);
 
-		if(isset($funcionario)) {
+		if (isset($funcionario)) {
 			return "$funcionario->nome ($funcionario->matricula)";
 		}
 
@@ -70,14 +70,16 @@ class Funcionario extends BaseModel {
 
 	static public function getLoggedUserId() {
 
-		$funcionario = Funcionario::searchByUsername(Auth::user()->username);
+		if(Auth::user())
+		{
+			$funcionario = Funcionario::searchByUsername(Auth::user()->username);
 
-		if(isset($funcionario)) {
-			return $funcionario->id;
+			if (isset($funcionario)) {
+				return $funcionario->id;
+			}
 		}
 
 		return null;
-
 	}
 
 	public function isLoggedIn() {
@@ -92,7 +94,7 @@ class Funcionario extends BaseModel {
 				$h = explode(':', $this->horario_limite);
 				// $hora->hora_saida = $horaEntrada->setTime($h[0],$h[1],0);
 				// Schneider mandou colocar a hora de saída igual à hora de entrada se o usuário esquecer de sair
-				$hora->hora_saida = $hora->hora_entrada;
+				$hora->hora_saida = App\Models\Event::getLastEventTime($this->id, $hora->hora_entrada);
 				$hora->saida_automatica = true;
 				$hora->save();
 			} else {
@@ -104,6 +106,45 @@ class Funcionario extends BaseModel {
 
 	}
 
+	public function getCurrentLoginTime()
+	{
+		$horas = Hora::where('funcionario_id', $this->id)->whereNull('hora_saida')->get();
+
+		$today = (new DateTime)->setTime(0,0,0);
+
+		foreach($horas as $hora) {
+			$horaEntrada = (new DateTime($hora->hora_entrada))->setTime(0,0,0);
+			if ($horaEntrada >= $today) {
+				return $hora;
+			}
+		}
+
+		return null;
+	}
+
+	public function logIn() {
+		if ( ! $this->isLoggedIn() )
+		{
+			$user = Funcionario::getLoggedUserId();
+			$hora = new Hora;
+			$hora->funcionario_id = $this->id;
+			$hora->hora_entrada = new DateTime;
+			$hora->funcionario_informou_id = $user ?: -999;
+			$hora->save();
+		}
+	}
+
+	public function logOut() {
+		if ( $this->isLoggedIn() )
+		{
+			$hora = $this->getCurrentLoginTime();
+
+			$hora->hora_saida = new DateTime; /// logout now
+
+			$hora->save();
+		}
+	}
+
 	public function isCurrentUser() 
 	{
 		return $this->id === $this->getLoggedUserId();
@@ -113,7 +154,7 @@ class Funcionario extends BaseModel {
 		
 		$ramais = $this->ramal;
 
-		if(isset($this->ramal_movel)) {
+		if (isset($this->ramal_movel)) {
 			$ramais = $ramais . (!empty($ramais) ? ' e ' : '') . "$this->ramal_movel (móvel)";
 		}
 
@@ -122,7 +163,7 @@ class Funcionario extends BaseModel {
 
 	public static function authenticate($username, $password)
 	{
-		if( ! static::tryAuthenticate($username, $password) )
+		if ( ! static::tryAuthenticate($username, $password) )
 		{
 			return false;
 		}
@@ -141,15 +182,15 @@ class Funcionario extends BaseModel {
 
 	public static function tryAuthenticate($username, $password)
 	{
-		if( LDAP::authenticate($username, $password) ) return true;
+		if ( LDAP::authenticate($username, $password) ) return true;
 
 		$funcionario = Funcionario::searchByUsername($username);
 
-		if( ! empty($funcionario))
+		if ( ! empty($funcionario))
 		{
-			if( LDAP::authenticate($funcionario->usuario, $password) ) return true;
+			if ( LDAP::authenticate($funcionario->usuario, $password) ) return true;
 
-			if( LDAP::authenticate($funcionario->nome, $password) ) return true;
+			if ( LDAP::authenticate($funcionario->nome, $password) ) return true;
 		}
 
 		return false;
@@ -157,9 +198,9 @@ class Funcionario extends BaseModel {
 
 	public static function workHours($funcionario, $dateStart, $dateEnd) 
 	{
-		if($dateStart > Carbon::today()) return null;
+		if ($dateStart > Carbon::today()) return null;
 
-		if( ! $funcionario instanceof Funcionario)
+		if ( ! $funcionario instanceof Funcionario)
 		{
 			$funcionario = Funcionario::find($funcionario);
 		}
