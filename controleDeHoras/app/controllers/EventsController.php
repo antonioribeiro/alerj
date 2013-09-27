@@ -24,14 +24,21 @@ class EventsController extends BaseController {
 
 			if ($console == 'local')
 			{
-				if( ! $funcionario->isLoggedIn())
+				if( in_array($event, ['login','open','unlock']) )
 				{
-					Log::info('event system - user automatically logged in: '.$funcionario->nome);
-					$funcionario->logIn();
+					if( ! $funcionario->isLoggedIn())
+					{
+						Log::info('event system - user automatically logged in: '.$funcionario->nome);
+						$funcionario->logIn();
+					}
+					else
+					{
+						Log::info('event system - user is already logged in: '.$funcionario->nome);
+					}
 				}
 				else
 				{
-					Log::info('event system - user is already logged in: '.$funcionario->nome);
+					Log::info('event system - user is getting out: '.$funcionario->nome);
 				}
 			}
 			else
