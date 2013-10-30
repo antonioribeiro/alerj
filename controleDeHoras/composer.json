@@ -1,12 +1,13 @@
 {
 	"require": {
-		"laravel/framework": "4.0.*",
+		"laravel/framework": "4.1.*",
 		"raveren/kint": "dev-master",
 		"way/generators": "dev-master",
 		"jasonlewis/basset": "dev-master",
 		"jasonlewis/expressive-date": "1.*",
 		"davejamesmiller/laravel-breadcrumbs": "dev-master",
-		"cartalyst/sentry": "2.0.*"
+		"cartalyst/sentry": "2.0.*",
+		"way/guard-laravel": "dev-master"
 	},
 
     "autoload": {
@@ -51,5 +52,3 @@
 
 	"minimum-stability": "dev"
 }
-
-

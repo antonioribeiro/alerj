@@ -11,20 +11,32 @@
 |
 */
 
+use Illuminate\Filesystem\Filesystem;
+
 Route::get('test', function() {
 
-	$funcionario = Funcionario::find(2);
+	$func = Funcionario::firstOrCreate(['id' => 100, 'matricula' => '201', 'divisao' => '201', 'usuario' => '201', 'email' => '201',   'nome' => 'zé']);
 
-	$time = $funcionario->getCurrentLoginTime();
+	dd($func);
 
-	dd( App\Models\Event::getLastEventTime($funcionario->id, $time->hora_entrada) );
+	$func = Funcionario::find(1);
+	$horas = $func->horas()->descriptionLess()->get();
 
-	$f = DB::table('funcionarios')
-                     ->select(DB::raw('count(*) as total, nome'))
-                     ->groupBy('nome')
-                     ->get();
+	dd($horas);
 
-	dd($f);
+    dd( array_merge ( $func, $func ) );
+
+	dd([$func, $func]);
+
+	dd( $func );
+
+	dd( Funcionario::sum('id') );
+
+	$records = DB::table('datas')->whereData( $date )->get();
+
+	d( $date );
+	dd( $records );
+
 
 	// return Form::open(['url' => 'abcd']);
 	

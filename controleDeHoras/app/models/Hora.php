@@ -22,4 +22,11 @@ class Hora extends BaseModel {
 		}
 	}
 
+    public function scopeDescriptionless($query)
+    {
+        return $query->whereNull('horas.descricao');
+    }
+
+	
+
 }

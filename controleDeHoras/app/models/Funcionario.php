@@ -21,6 +21,11 @@ class Funcionario extends BaseModel {
 		
 	}
 
+	public function horas()
+	{
+		return $this->hasMany('Hora', 'funcionario_id');
+	}
+
 	static public function searchByUsername($userName) {
 		
 		$ret = false;
@@ -245,3 +250,4 @@ class Funcionario extends BaseModel {
 		return Funcionario::create($input);
 	}
 }
+

@@ -112,8 +112,9 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'Basset\BassetServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',
-		'DaveJamesMiller\Breadcrumbs\BreadcrumbsServiceProvider',
+		'DaveJamesMiller\Breadcrumbs\ServiceProvider',
 		'Cartalyst\Sentry\SentryServiceProvider',
+		'Way\Console\GuardLaravelServiceProvider',
 	),
 
 	/*
@@ -149,7 +150,7 @@ return array(
 		'Cache'           => 'Illuminate\Support\Facades\Cache',
 		'ClassLoader'     => 'Illuminate\Support\ClassLoader',
 		'Config'          => 'Illuminate\Support\Facades\Config',
-		'Controller'      => 'Illuminate\Routing\Controllers\Controller',
+		'Controller'      => 'Illuminate\Routing\Controller',
 		'Cookie'          => 'Illuminate\Support\Facades\Cookie',
 		'Crypt'           => 'Illuminate\Support\Facades\Crypt',
 		'DB'              => 'Illuminate\Support\Facades\DB',
@@ -180,7 +181,7 @@ return array(
 		'View'            => 'Illuminate\Support\Facades\View',
 		'ExpressiveDateServiceProvider'       => '',
 		'Basset'          => 'Basset\Facades\Basset',
-		'Breadcrumbs'     => 'DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs',
+		'Breadcrumbs'     => 'DaveJamesMiller\Breadcrumbs\Facade',
 		'Sentry'          => 'Cartalyst\Sentry\Facades\Laravel\Sentry'
 
 	),
