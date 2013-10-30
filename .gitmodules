@@ -1,3 +1,6 @@
 [submodule "controleDeHoras/app/libraries"]
 	path = controleDeHoras/app/libraries
 	url = https://github.com/antonioribeiro/core-libraries.git
+[submodule "proxyAdmin/app/libraries"]
+	path = proxyAdmin/app/libraries
+	url = https://github.com/antonioribeiro/core-libraries.git
