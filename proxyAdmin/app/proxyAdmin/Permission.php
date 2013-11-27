@@ -1,6 +1,7 @@
 <?php
 
-class Permission extends Eloquent {
+class Permission extends BaseModel {
+	protected $userTtl = 0; /// user query lasts for x minutes
 
 	protected $primaryKey = 'urls';
 	protected $connection = 'sdgipa';
@@ -43,14 +44,18 @@ class Permission extends Eloquent {
 
 		$permissions->delete();
 
-		foreach($groups as $group)
+		if($groups)
 		{
-			Permission::create([
-									'department_id' => $dId,
-									'user_id' => $uId,
-									'list_id' => $group,
-								]);
+			foreach($groups as $group)
+			{
+				Permission::create([
+										'department_id' => $dId,
+										'user_id' => $uId,
+										'list_id' => $group,
+									]);
+			}
 		}
+
 	}
 
 	public static function getSelected($departamento, $usuario)
@@ -70,6 +75,33 @@ class Permission extends Eloquent {
 		}
 
 		return $r;
+	}
+
+	public static function hasAccess($user, $url)
+	{
+		$result = true; /// or DENY
+
+		$url = BlockingUrl::where('url', $url)->remember(100)->first();
+
+		$user = Usuario::where('nome_windows_usuario', strtoupper($user))->remember(100)->first();
+
+		if ($url && $user)
+		{
+			$result = Permission::where('list_id', $url->list_id)
+						->where(function($query) use ($user)
+						{
+							$query->where('user_id', $user->codigo_usuario)
+									->orWhere(function($query) use ($user)
+									{
+										$query->where('department_id', $user->codigo_departamento)
+											  ->whereNull('user_id');
+									});
+						})
+						->remember(1)->first();
+
+		}
+
+		return $result;
 	}
 
 }

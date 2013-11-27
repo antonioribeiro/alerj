@@ -14,18 +14,28 @@ class UrlsTableSeeder extends Seeder {
 		$id = 1;
 
 		$urls = [
-					['name' => 'facebook', 'url' => '.facebook.com'],
-					['name' => 'facebook', 'url' => '.facebook.com.br'],
-					['name' => 'facebook', 'url' => '.facebook.fr'],
+					['name' => 'facebook', 'url' => 'facebook.com'],
+					['name' => 'facebook', 'url' => 'facebook.com.br'],
+					['name' => 'facebook', 'url' => 'facebook.fr'],
 					['name' => 'facebook', 'url' => 'pt-br.facebook.com'],
 					['name' => 'facebook', 'url' => 'www.facebook.com'],
 					['name' => 'facebook', 'url' => 'www.facebook.com.br'],
 					['name' => 'facebook', 'url' => 'www.facebook.fr'],
-					['name' => 'youtube' , 'url' => '.youtu.be'],
-					['name' => 'youtube' , 'url' => '.youtube.com'],
-					['name' => 'youtube' , 'url' => '.youtube.co'],
-					['name' => 'youtube' , 'url' => '.googlevideo.com'],
-					['name' => 'youtube' , 'url' => '.ytimg.com'],
+
+					['name' => 'youtube' , 'url' => 'youtu.be'],
+					['name' => 'youtube' , 'url' => 'youtube.com'],
+					['name' => 'youtube' , 'url' => 'youtube.co'],
+					['name' => 'youtube' , 'url' => 'googlevideo.com'],
+					['name' => 'youtube' , 'url' => 'ytimg.com'],
+
+					['name' => 'playboy' , 'url' => 'b.scorecardresearch.com'],
+					['name' => 'playboy' , 'url' => 'pictures.playboy.com'],
+					['name' => 'playboy' , 'url' => 'pixel.quantserve.com'],
+					['name' => 'playboy' , 'url' => 'playboy.com'],
+					['name' => 'playboy' , 'url' => 'static2.playboy.com'],
+					['name' => 'playboy' , 'url' => 'playboy.abril.com.br'],
+					['name' => 'playboy' , 'url' => 'playboy.com.br'],
+					
 				];
 
 		foreach ($urls as $url)

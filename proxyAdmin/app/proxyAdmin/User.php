@@ -11,8 +11,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public function isAdministrator()
 	{
+		// aplicação = 16
+		// perfil = 48
+		// usuario = 23 = afaria
+		// funcao = 342 = administrar proxy
 
-		return PerfilUsuario::where('id_usuario', $this->codigo_usuario)->where('id_perfil', 45)->count() > 0;
+		return PerfilUsuario::where('id_usuario', $this->codigo_usuario)->where('id_perfil', 48)->count() > 0;
 
 	}
 

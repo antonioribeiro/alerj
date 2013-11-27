@@ -1,6 +1,6 @@
 <?php
 
-class Departamento extends Eloquent {
+class Departamento extends BaseModel {
 
 	protected $primaryKey = 'codigo_departamento';
 	protected $connection = 'adm_user';
@@ -77,5 +77,16 @@ class Departamento extends Eloquent {
 		}
 
 		return $d;
+	}
+
+	public function getAll()
+	{
+		DB::connection('adm_user')->statement("IF OBJECT_ID('tempdb..#tmp', 'U') IS NOT NULL DROP TABLE #tmp;");
+
+		DB::connection('adm_user')->statement("CREATE TABLE #tmp (codigo_departamento int, sigla_departamento varchar(20), nome_departamento varchar(255), nivel int);");
+
+		DB::connection('adm_user')->statement("INSERT INTO  #tmp (codigo_departamento, sigla_departamento, nome_departamento, nivel) EXEC dbo.hierarquia_departamental 1;");
+
+		return DB::connection('adm_user')->table("#tmp")->get();
 	}
 }

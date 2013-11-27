@@ -15,6 +15,7 @@
  
     <!-- Custom styles for this template -->
     <link href="{{URL::to('/')}}/assets/custom/css/site.css" rel="stylesheet">
+    <link href="{{URL::to('/')}}/assets/custom/css/tree.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -37,14 +38,13 @@
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                <li class="active"><a href="{{URL::route('home')}}">Principal</a></li>
                 <li class="dropdown">
-                    <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Usuários <b class="caret"></b></a>
+                    <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Opções <b class="caret"></b></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ URL::route('loginForm') }}">Login</a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ URL::route('logout') }}">{{ $layoutLogout }}</a></li>
                     <li role="presentation" class="divider"></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ URL::route('loginForm') }}">Listar usuários</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ URL::route('lists.index') }}">Gerenciar Listas</a></li>
                     </ul>
                 </li>
                 </ul>

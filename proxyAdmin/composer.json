@@ -5,8 +5,8 @@
 	"require": {
 		"laravel/framework": "4.1.x",
 		"davejamesmiller/laravel-breadcrumbs": "dev-master",
-		"raveren/kint": "dev-1.0.0-wip",
-		"way/generators": "1.0.*@dev",
+		"raveren/kint": "dev-master",
+		"way/generators": "dev-master",
 		"tiesa/ldap": "dev-master"
 	},
 	"autoload": {

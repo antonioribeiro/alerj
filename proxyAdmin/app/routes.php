@@ -1,5 +1,18 @@
 <?php 
 
+Route::get('/test', function() {
+
+	$input = Illuminate\Http\Request::createFromGlobals();
+
+	dd($input->all());
+
+	$func = new BlockingList;
+	dd( $func->getAllColumnsNames() );
+
+});
+
+Route::get('edit/{offer}','ListsController@offer');
+
 // DB::listen(function($sql) { echo "<pre>"; var_dump($sql); echo "</pre><br>"; });
 
 Route::get('/login', array('as' => 'loginForm', 'uses' => 'AuthController@loginForm'));
@@ -12,7 +25,7 @@ Route::get('/message', array('as' => 'message', 'uses' => 'MessageController@mes
 
 Route::get('/forbidden', array('as' => 'forbidden', 'uses' => 'AuthController@forbidden'));
 
-Route::get('/rights', array('as' => 'rights', 'uses' => 'ProxyController@rights'));
+Route::get('/check/{user}/{site}', array('as' => 'check', 'uses' => 'ProxyController@check'));
 
 Route::group(array('before' => 'auth'), function()
 {
@@ -21,12 +34,19 @@ Route::group(array('before' => 'auth'), function()
 	{
 
 		Route::get('/', array('as' => 'home', 'uses' => 'DepartamentosController@index'));
+		
 		Route::get('/', array('as' => 'departamentos', 'uses' => 'DepartamentosController@index'));
 		Route::get('departamento/{parent?}/{child?}', array('as' => 'departamento', 'uses' => 'DepartamentosController@index'));
 
 		Route::get('usuarios/{id}', array('as' => 'usuarios', 'uses' => 'UsuariosController@index'));
 		Route::get('proxy/{departamento}/{usuario}', array('as' => 'proxy', 'uses' => 'ProxyController@show'));
 		Route::post('proxy/{departamento}/{usuario}/edit', array('as' => 'proxy.edit', 'uses' => 'ProxyController@edit'));
+
+		Route::get('lists', array('as' => 'lists.index', 'uses' => 'ListsController@index'));
+		Route::get('lists/create', array('as' => 'lists.create', 'uses' => 'ListsController@create'));
+		Route::post('lists/store', array('as' => 'lists.store', 'uses' => 'ListsController@store'));
+		Route::get('lists/{edit}', array('as' => 'lists.edit', 'uses' => 'ListsController@edit'));
+		Route::patch('lists/{edit}', array('as' => 'lists.edit', 'uses' => 'ListsController@update'));
 
 	});
 

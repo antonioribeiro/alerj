@@ -34,6 +34,13 @@ class ListsTableSeeder extends Seeder {
 						'updated_at' => new DateTime,			
 					]);
 
+		DB::table($table)->insert([
+						'id' => $id++,
+						'name' => 'playboy',
+						'created_at' => new DateTime, 
+						'updated_at' => new DateTime,			
+					]);
+
 		DB::unprepared("SET IDENTITY_INSERT $table OFF");
 	}
 

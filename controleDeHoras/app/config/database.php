@@ -55,9 +55,9 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'controlehoras',
-			'username'  => 'controlehoras',
-			'password'  => '#!0ControleDeHorasALERJ#',
+			'database'  => 'testing',
+			'username'  => 'root',
+			'password'  => 'foda-se',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

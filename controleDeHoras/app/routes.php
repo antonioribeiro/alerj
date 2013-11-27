@@ -13,7 +13,23 @@
 
 use Illuminate\Filesystem\Filesystem;
 
+class Porra extends BaseModel {
+
+	/**
+	 * The database table used by the model.
+	 *
+	 * @var string
+	 */
+	protected $table = 'users';
+
+	protected $connection = 'mysql';
+
+}	
+
 Route::get('test', function() {
+
+	$func = new Funcionario;
+	dd( $func->getAllColumnsNames() );
 
 	$func = Funcionario::firstOrCreate(['id' => 100, 'matricula' => '201', 'divisao' => '201', 'usuario' => '201', 'email' => '201',   'nome' => 'zé']);
 

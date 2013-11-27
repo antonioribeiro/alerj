@@ -31,11 +31,22 @@ return array(
 		'adm_user' => array(
 			'driver'   => 'sqlsrv',
 			'host'     => 'al12',
-			'database' => 'ADM_USER',
+			'database' => 'ADM_USER_ANT',
 			'username' => 'AL\uteste',
 			'password' => 'trocar',
 			'prefix'   => '',
 		),
+
+		'mysql' => array(
+			'driver'    => 'mysql',
+			'host'      => 'localhost',
+			'database'  => 'testing',
+			'username'  => 'root',
+			'password'  => 'foda-se',
+			'charset'   => 'utf8',
+			'collation' => 'utf8_unicode_ci',
+			'prefix'    => '',
+		),		
 
 	),
 

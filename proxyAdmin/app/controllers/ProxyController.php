@@ -22,6 +22,11 @@ class ProxyController extends BaseController {
 		Permission::updateList($departamento, $usuario, Input::get('group'));
 
 		return Redirect::back()->with('message', 'As permissões foram atualizadas.');
-
 	}
+
+	public function check($user, $url)
+	{
+		return Permission::hasAccess($user, $url) ? "ALLOW" : "DENY";
+	}
+
 }

@@ -1,6 +1,6 @@
 <?php
 
-class PerfilUsuario extends Eloquent {
+class PerfilUsuario extends BaseModel {
 
 	protected $primaryKey = ['id_usuario', 'id_perfil'];
 	protected $connection = 'adm_user';

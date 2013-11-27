@@ -1,6 +1,6 @@
 <?php
 
-class Usuario extends Eloquent {
+class Usuario extends BaseModel {
 
 	protected $primaryKey = 'codigo_usuario';
 	protected $connection = 'adm_user';
@@ -13,7 +13,7 @@ class Usuario extends Eloquent {
 
 	public function getList($departamento)
 	{
-		$usuarios = Usuario::where('codigo_departamento', $departamento)->get()->toArray();
+		$usuarios = Usuario::where('codigo_departamento', $departamento)->where('status_usuario', 'A')->orderBy('nome_usuario')->get()->toArray();
 
 		array_unshift($usuarios, ['codigo_usuario' => 'all', 'nome_usuario' => 'TODOS', 'nome_windows_usuario' => 'TODOS']);
 
