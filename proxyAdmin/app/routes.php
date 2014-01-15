@@ -2,12 +2,13 @@
 
 Route::get('/test', function() {
 
-	$input = Illuminate\Http\Request::createFromGlobals();
+	DB::connection()->beginTransaction();
 
-	dd($input->all());
+	DB::connection()->commit();
 
-	$func = new BlockingList;
-	dd( $func->getAllColumnsNames() );
+	$r = new APP\MyRoutes();
+
+	$r->routes();
 
 });
 
