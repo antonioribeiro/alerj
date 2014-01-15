@@ -26,8 +26,8 @@ class ReportsController extends BaseController {
 			$weeks[] = [
 				'week'=>$date->weekOfYear,
 				'year'=>$date->year,
-				'from'=>$date->startOfWeek(),
-				'to'=>$date->next(Carbon::FRIDAY),
+				'from'=>$date->startOfWeek()->copy(),
+				'to'=>$date->next(Carbon::FRIDAY)->copy(),
 				'fromMY'=>Tools::format($date->startOfWeek(),'d/F'),
 				'toMY'=>Tools::format($date->next(Carbon::FRIDAY),'d/F'),
 			];

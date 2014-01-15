@@ -17,7 +17,7 @@
 			<tr>
 				<th>Semana</th>
 				@foreach($funcionarios as $funcionario)
-					<th>{{$funcionario->nome}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+					<th>{{str_replace(' ', '<br>', $funcionario->nome)}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
 				@endforeach
 			</tr>
 		</thead>

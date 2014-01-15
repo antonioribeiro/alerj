@@ -203,14 +203,16 @@ class Funcionario extends BaseModel {
 
 	public static function workHours($funcionario, $dateStart, $dateEnd) 
 	{
-		if ($dateStart > Carbon::today()) return null;
-
 		if ( ! $funcionario instanceof Funcionario)
 		{
 			$funcionario = Funcionario::find($funcionario);
 		}
 
-		$horas = Hora::where('funcionario_id', $funcionario->id)->where('hora_entrada','>=',$dateStart)->where('hora_entrada','<=',$dateEnd)->orderBy('id')->get();
+		$horas = Hora::where('funcionario_id', $funcionario->id)
+						->where('hora_entrada','>=',$dateStart)
+						->where('hora_entrada','<=',$dateEnd)
+						->orderBy('id')
+						->get();
 
 		$seconds = 0;
 		foreach($horas as $hora) {
