@@ -97,7 +97,7 @@ Route::group(array('before' => 'auth'), function()
 
 	Route::get('horas/toggle/{funcionarioId}', array('as' => 'horas.toggle', 'uses' => 'HorasController@toggle'));
 
-	Route::get('reports/weekly', array('as' => 'reports.weekly', 'uses' => 'ReportsController@weekly'));
+	Route::get('reports/weekly/{year}', array('as' => 'reports.weekly', 'uses' => 'ReportsController@weekly'));
 
 	Route::get('reports/xls/{week}/{year}', array('as' => 'reports.xls', 'uses' => 'ReportsController@xls'));
 

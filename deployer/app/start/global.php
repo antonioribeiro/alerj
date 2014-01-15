@@ -16,7 +16,6 @@ ClassLoader::addDirectories(array(
 	app_path().'/commands',
 	app_path().'/controllers',
 	app_path().'/models',
-	app_path().'/services',
 	app_path().'/database/seeds',
 
 ));
@@ -28,13 +27,11 @@ ClassLoader::addDirectories(array(
 |
 | Here we will configure the error logger setup for the application which
 | is built on top of the wonderful Monolog library. By default we will
-| build a rotating log file setup which creates a new file each day.
+| build a basic log file setup which creates a single file for logs.
 |
 */
 
-$logFile = 'log-'.php_sapi_name().'.txt';
-
-Log::useDailyFiles(storage_path().'/logs/'.$logFile);
+Log::useFiles(storage_path().'/logs/laravel.log');
 
 /*
 |--------------------------------------------------------------------------
@@ -55,14 +52,19 @@ App::error(function(Exception $exception, $code)
 });
 
 /*
-| Custom Auth
+|--------------------------------------------------------------------------
+| Maintenance Mode Handler
+|--------------------------------------------------------------------------
+|
+| The "down" Artisan command gives you the ability to put an application
+| into maintenance mode. Here, you will define what is displayed back
+| to the user if maintenance mode is in effect for the application.
 |
 */
 
-Auth::extend('custom', function($app) {
-	$provider =  new \ACR\Auth\ACRUserProvider(new Funcionario);
-
-    return new \Illuminate\Auth\Guard($provider, $app['session.store']);
+App::down(function()
+{
+	return Response::make("Be right back!", 503);
 });
 
 /*
@@ -76,5 +78,4 @@ Auth::extend('custom', function($app) {
 |
 */
 
-require __DIR__.'/../filters.php';
-
+require app_path().'/filters.php';

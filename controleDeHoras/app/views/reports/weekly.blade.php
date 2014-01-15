@@ -6,6 +6,12 @@
 
 	<h1>Relatório por semana</h1>
 
+	@foreach(range(2013, \Carbon\Carbon::now()->year) as $year)
+		<a href="{{ URL::route('reports.weekly', $year) }}" class="btn btn-primary">{{$year}}</a>
+	@endforeach
+
+	<br><br>
+
 	<table style="max-width: none;" cellpadding="0" cellspacing="0" border="0" class="table table-bordered">
 		<thead>
 			<tr>
@@ -18,7 +24,7 @@
 		<tbody>
 			@foreach($weeks as $week)
 				<tr>
-					<td><p class="text-center">{{$week['week']}}/2013</p><p class="text-center">{{$week['fromMY']}}<br>{{$week['toMY']}}<br><br><a class="btn btn-mini" href="{{ URL::route('reports.xls', [$week['week'],$week['year']]) }}">XLS</a></p></td>
+					<td><p class="text-center">{{$week['week']}}/{{$week['year']}}</p><p class="text-center">{{$week['fromMY']}}<br>{{$week['toMY']}}<br><br><a class="btn btn-mini" href="{{ URL::route('reports.xls', [$week['week'],$week['year']]) }}">XLS</a></p></td>
 					@foreach($funcionarios as $funcionario)
 						<td>{{Funcionario::workHours($funcionario->id,$week['from'],$week['to'])}}</td>
 					@endforeach

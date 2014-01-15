@@ -4,43 +4,38 @@ use Carbon\Carbon;
 
 class ReportsController extends BaseController {
 
-	public function weekly()
+	public function weekly($year)
 	{
-		$horas = Hora::whereNotNull('id')->orderBy('id')->first();
-
 		$funcionarios = Funcionario::all();
 
-		$date = new Carbon($horas->hora_entrada);
+		$date = Carbon::create($year, 1, 1, 0, 0, 0)->startOfWeek();
+		$lastWeek = Carbon::create($year, 12, 31, 0, 0, 0)->next(Carbon::FRIDAY)->weekOfYear;
 
-		$firstWeek = $date->weekOfYear;
-
-		$date = Carbon::createFromTimestamp( Tools::firstDayOfWeek($firstWeek, $date->year) );
+		if (Carbon::now()->year == $year)
+		{
+			$currentWeek = Carbon::now()->weekOfYear;
+		}
+		else
+		{
+			$currentWeek = 52 + ($lastWeek == 1 ? 1 : 0);
+		}
 
 		$weeks = [];
-		while($date->weekOfYear >= $firstWeek) {
-			$date->hour = 0;
-			$date->minute = 0;
-			$date->second = 0;
-			$from = $date->toDateTimeString();
 
-			$date->addDays(4);
-			$date->hour = 23;
-			$date->minute = 59;
-			$date->second = 59;
-			$to = $date->toDateTimeString();
-
+		foreach(range($date->weekOfYear, $currentWeek) as $week) {
 			$weeks[] = [
 				'week'=>$date->weekOfYear,
 				'year'=>$date->year,
-				'from'=>$from,
-				'to'=>$to,
-				'fromMY'=>Tools::format($from,'d/F'),
-				'toMY'=>Tools::format($to,'d/F'),
+				'from'=>$date->startOfWeek(),
+				'to'=>$date->next(Carbon::FRIDAY),
+				'fromMY'=>Tools::format($date->startOfWeek(),'d/F'),
+				'toMY'=>Tools::format($date->next(Carbon::FRIDAY),'d/F'),
 			];
 
-			$date->subDays(4);
 			$date->addWeek();
 		}
+
+		$weeks = array_reverse($weeks);
 
 		return View::make('reports.weekly')
 				->with('weeks', $weeks)

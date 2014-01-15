@@ -67,7 +67,7 @@
 										<a href="{{URL::route('home')}}">Funcionários</a>
 									</li>
 									<li>
-										<a href="{{URL::route('reports.weekly')}}">Relatório semanal</a>
+										<a href="{{URL::route('reports.weekly', \Carbon\Carbon::now()->year)}}">Relatório semanal</a>
 									</li>
 								</ul>
 							</li>
