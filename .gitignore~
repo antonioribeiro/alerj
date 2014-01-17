@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ansible-laravel
 antoniocarlosribeiro.com
 l4i
@@ -9,3 +10,9 @@ glottos
 glottosAdmin
 laravel-installer
 vonsultoriu.com
+=======
+/vendor
+composer.phar
+composer.lock
+.DS_Store
+>>>>>>> 35892523c7a4c0c888632e97b032d97ed11d9a7a
